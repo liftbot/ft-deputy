@@ -1,0 +1,12 @@
+.DS_Store
+npm-debug.log
+
+.idea/
+node_modules/
+log/
+tests/
+
+.travis.yml
+.npmignore
+**/.gitkeep
+Makefile

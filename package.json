@@ -1,0 +1,23 @@
+{
+  "name": "ft-deputy",
+  "version": "1.0.0",
+  "description": "helper package for Fulfillment Tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "make tests"
+  },
+  "author": "wluo",
+  "license": "MIT",
+  "dependencies": {
+    "file-stream-rotator": "0.0.6",
+    "morgan": "1.7.0",
+    "winston": "2.2.0",
+    "winston-daily-rotate-file": "1.1.4"
+  },
+  "devDependencies": {
+    "babel-register": "^6.9.0",
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.4"
+  }
+}
