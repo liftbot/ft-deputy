@@ -36,6 +36,6 @@ module.exports = (appName, logger, jobService) => {
     }
 
     res.status(err.code || 500);
-    res.json({error: err.message});
+    res.json(err.customData || {error: err.message});
   }
 };
