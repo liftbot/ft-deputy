@@ -56,11 +56,11 @@ class PermissionError extends FTError {
   }
 }
 
-module.exports = {
-  FTError: FTError,
-  AuthError: AuthError,
-  ReqError: ReqError,
-  ReqParamsError: ReqParamsError,
-  NotFoundError: NotFoundError,
-  PermissionError: PermissionError
+module.exports = function(target) {
+  target.FTError = FTError;
+  target.AuthError = AuthError;
+  target.ReqError = ReqError;
+  target.ReqParamsError = ReqParamsError;
+  target.NotFoundError = NotFoundError;
+  target.PermissionError = PermissionError;
 };
