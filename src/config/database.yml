@@ -1,0 +1,35 @@
+development:
+  database: ft_dev
+  user: root
+  pass: root
+  options:
+    host: 10.63.88.138
+    port: 3306
+    pool:
+      max: 5
+      min: 0
+      idle: 10000
+
+staging:
+  database: <%= process.env.MYSQL_DATABASE %>
+  user: <%= process.env.MYSQL_USER %>
+  pass: <%= process.env.MYSQL_PASS %>
+  options:
+    host: <%= process.env.MYSQL_HOST %>
+    port: <%= process.env.MYSQL_PORT %>
+    pool:
+      max: 5
+      min: 0
+      idle: 10000
+
+production:
+  database: <%= process.env.MYSQL_DATABASE %>
+  user: <%= process.env.MYSQL_USER %>
+  pass: <%= process.env.MYSQL_PASS %>
+  options:
+    host: <%= process.env.MYSQL_HOST %>
+    port: <%= process.env.MYSQL_PORT %>
+    pool:
+      max: 5
+      min: 0
+      idle: 10000
