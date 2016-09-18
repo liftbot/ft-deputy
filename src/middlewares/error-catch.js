@@ -1,6 +1,5 @@
 'use strict';
 
-const FTError = require('../lib/errors').FTError;
 const request = require('request');
 
 module.exports = (appName, logger, jobService) => {
