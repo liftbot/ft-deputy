@@ -2,6 +2,7 @@
 
 let sequelize = require('./config/database');
 let settingControlFlag = require('./models/setting-control-flag');
+let system = require('./models/system');
 let user = require('./models/user');
 let preference = require('./models/preference');
 let actionHistory = require('./models/action-history');
@@ -16,6 +17,7 @@ let userRole = require('./models/user-role');
 
 module.exports = (target) => {
   let SettingControlFlag = settingControlFlag(sequelize);
+  let System = system(sequelize);
   let User = user(sequelize);
   let Preference = preference(sequelize);
   let ActionHistory = actionHistory(sequelize);
@@ -30,6 +32,7 @@ module.exports = (target) => {
 
   target.sequelize = sequelize;
   target.SettingControlFlag = SettingControlFlag;
+  target.System = System;
   target.User = User;
   target.Preference = Preference;
   target.ActionHistory = ActionHistory;
