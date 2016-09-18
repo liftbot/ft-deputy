@@ -28,6 +28,7 @@ module.exports = (target) => {
   let RolePermission = rolePermission(sequelize, Role, Permission)
   let UserRole = userRole(sequelize, User, Role);
 
+  target.sequelize = sequelize;
   target.SettingControlFlag = SettingControlFlag;
   target.User = User;
   target.Preference = Preference;
@@ -41,5 +42,5 @@ module.exports = (target) => {
   target.RolePermission = RolePermission;
   target.UserRole = UserRole;
 
-  sequelize.sync();
+  target.sequelize.sync();
 };

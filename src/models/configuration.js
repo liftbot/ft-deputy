@@ -2,9 +2,9 @@
 
 const RSVP = require('rsvp');
 const Sequelize = require('sequelize');
-const diff = require('file-content').diff;
-const hash = require('file-content').hash;
-const prettify = require('file-content').prettify;
+const diff = require('../lib/diff');
+const hash = require('../lib/hash');
+const prettify = require('../lib/prettify');
 
 module.exports = (sequelize) => {
   return sequelize.define('configuration', {

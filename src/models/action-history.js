@@ -28,6 +28,16 @@ module.exports = (sequelize) => {
     timestamps: true,
     underscored: true,
 
+    classMethods: {
+      login(username) {
+        return this.create({
+          user: username,
+          event_title: 'User Login',
+          event_description: 'User login'
+        });
+      }
+    },
+
     indexes: [
       {
         fields: ['user', 'event_title']

@@ -9,8 +9,9 @@
   "author": "wluo",
   "license": "MIT",
   "dependencies": {
+    "crypto": "0.0.3",
+    "diff": "2.2.3",
     "ejs": "2.3.4",
-    "file-content": "git+https://git@github.com/weilluo/file-content.git",
     "file-stream-rotator": "0.0.6",
     "js-yaml": "3.5.3",
     "mysql": "2.10.2",
@@ -18,6 +19,7 @@
     "request": "2.72.0",
     "rsvp": "3.2.1",
     "sequelize": "3.20.0",
+    "shelljs": "0.7.0",
     "winston": "2.2.0",
     "winston-daily-rotate-file": "1.1.4"
   },

@@ -7,9 +7,6 @@ const path = require('path');
 const Sequelize = require('sequelize');
 
 let env = process.env.NODE_ENV || 'development';
-console.log("****************************************************************");
-console.log(process.env);
-console.log("****************************************************************");
 let db = yaml.safeLoad(ejs.render(fs.readFileSync(path.resolve(__dirname, './database.yml'), 'UTF-8')));
 db = db[env];
 
