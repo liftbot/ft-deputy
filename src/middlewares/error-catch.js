@@ -6,7 +6,7 @@ module.exports = (appName, logger, jobService) => {
   return (err, req, res, next) => {
     logger.error(err.message, "\n" + err.stack);
 
-    if (!(err instanceof FTError)) {  // Uncatched error should be notified
+    if (!(err instanceof FTError) && jobService) {  // Uncatched error should be notified
       let options = {
         method: 'POST',
         uri: jobService + '/jobs/mail',
