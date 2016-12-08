@@ -11,4 +11,4 @@ exports.models = require('./src/models');
 exports.logger = require('./src/lib/logger');
 
 // for custom Model creation
-exports.Sequlize = require('sequelize');
+exports.Sequelize = require('sequelize');
