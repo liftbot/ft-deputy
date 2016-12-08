@@ -9,3 +9,6 @@ exports.errorCatch = require('./src/middlewares/error-catch');
 exports.errors = require('./src/lib/errors');
 exports.models = require('./src/models');
 exports.logger = require('./src/lib/logger');
+
+// for custom Model creation
+exports.Sequlize = require('sequelize');
