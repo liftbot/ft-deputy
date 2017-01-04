@@ -44,7 +44,9 @@ module.exports = {
     return { text: result.stdout, error: result.stderr, exitStatus: result.code };
   },
 
-  run(content, newContent, sep=' ') {
+  run(content, newContent, sep) {
+    sep = sep || ' ';
+
     let folder = `${(new Date()).getTime()}`;
     folder = `${tempdir()}/${folder}`;
 
