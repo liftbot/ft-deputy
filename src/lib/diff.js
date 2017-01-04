@@ -57,8 +57,8 @@ module.exports = {
 
     cd(folder);
 
-    let cmd = `diff --unchanged-line-format='%dn${sep}%L --new-line-format='+${sep}%dn${sep}%L'
-      --old-line-format='-${sep}%dn${sep}%L' content newContent`;
+    let cmd = `diff --unchanged-line-format='%dn${sep}%L --new-line-format='+${sep}%dn${sep}%L' ` +
+      `--old-line-format='-${sep}%dn${sep}%L' content newContent`;
 
     let result = exec(cmd, { silent: true });
 
