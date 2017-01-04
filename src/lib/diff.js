@@ -42,5 +42,27 @@ module.exports = {
     rm('-rf', folder);
 
     return { text: result.stdout, error: result.stderr, exitStatus: result.code };
+  },
+
+  run(content, newContent, sep=' ') {
+    let folder = `${(new Date()).getTime()}`;
+    folder = `${tempdir()}/${folder}`;
+
+    mkdir('-p', folder);
+
+    fs.writeFileSync(`${folder}/content`, content);
+    fs.writeFileSync(`${folder}/newContent`, newContent);
+
+    cd(folder);
+
+    let cmd = `diff --unchanged-line-format='%dn${sep}%L --new-line-format='+${sep}%dn${sep}%L'
+      --old-line-format='-${sep}%dn${sep}%L' content newContent`;
+
+    let result = exec(cmd, { silent: true });
+
+    cd('~');
+    rm('-rf', folder);
+
+    return result;
   }
 };
