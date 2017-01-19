@@ -14,9 +14,11 @@ let permission = require('./models/permission');
 let role = require('./models/role');
 let rolePermission = require('./models/role-permission');
 let userRole = require('./models/user-role');
+let eventLog = require('./models/event-log');
 
 module.exports = (target) => {
   let SettingControlFlag = settingControlFlag(sequelize);
+  let EventLog = eventLog(sequelize);
   let System = system(sequelize);
   let User = user(sequelize);
   let Preference = preference(sequelize);
@@ -31,6 +33,7 @@ module.exports = (target) => {
   let UserRole = userRole(sequelize, User, Role);
 
   target.sequelize = sequelize;
+  target.EventLog = EventLog;
   target.SettingControlFlag = SettingControlFlag;
   target.System = System;
   target.User = User;
