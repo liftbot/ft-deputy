@@ -164,15 +164,14 @@ let createTankConfig = (token, data) => {
 };
 
 // AccountDID, TNDID, TN Name, or Site URL
-let queryTns = (kw) => {
+let queryTns = (searchObj) => {
   return new RSVP.Promise((resolve, reject) => {
-    let url = `${getUrl('com', ENV)}/talentnetworks/${kw}/json`;
+    let url = `${getUrl('com', ENV)}/talentnetworks/${searchObj.kw}/json`;
+    searchObj.qs.DeveloperKey = DEV_KEY;
     let options = {
       method: 'GET',
       uri: url,
-      qs: {
-        DeveloperKey: DEV_KEY
-      },
+      qs: searchObj.qs,
       json: true
     };
     request(options, (err, httpResponse, body) => {
