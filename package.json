@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "crypto": "0.0.3",
-    "diff": "2.2.3",
+    "diff": "3.2.0",
     "ejs": "2.3.4",
     "file-stream-rotator": "0.0.6",
     "joi": "8.4.2",
