@@ -72,15 +72,13 @@ module.exports = (sequelize) => {
 
     classMethods: {
       getStringValue: function(name) {
-        return this.findOne({where: {name: name, status: 'active'}})
-          .then(flag => RSVP.resolve(!flag ? '' : flag.value))
-          .catch(err => RSVP.resolve(''))
+        let f = (SETTING_CONTROL_FLAGS || []).filter(flag => name === flag.name)[0];
+        return !f ? '' : f.value;
       },
 
       getBooleanValue: function(name) {
-        return this.findOne({where: {name: name, status: 'active'}})
-          .then(flag => RSVP.resolve(!!flag && flag.value == 'true'))
-          .catch(err => RSVP.resolve(false))
+        let f = (SETTING_CONTROL_FLAGS || []).filter(flag => name === flag.name)[0];
+        return !!f && f.value == 'true';
       }
     }
   });

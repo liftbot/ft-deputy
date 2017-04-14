@@ -1,6 +1,7 @@
 'use strict';
 
 exports.diff = require('./src/lib/diff');
+exports.diff2 = require('./src/lib/diff2');
 exports.prettify = require('./src/lib/prettify');
 exports.hash = require('./src/lib/hash');
 
