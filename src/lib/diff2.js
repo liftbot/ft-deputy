@@ -26,7 +26,7 @@ module.exports = {
       throw new FTError('You should use this way "createPatch(oldStr, newStr)"');
     }
 
-    let folder = tempAssets(oldStr, newStr);
+    let folder = tempAssets([oldStr, newStr]);
     let patch = createPatch(folder);
     let reversePatch = createPatch(folder, true);
     rmTempAssets(folder);
@@ -39,14 +39,14 @@ module.exports = {
     patch: patch / reverse_patch
   */
   applyPatch(content, patch) {
-    let folder = tempAssets(content, patch);
+    let folder = tempAssets([content, patch]);
     let result = applyPatch(folder);
     rmTempAssets(folder);
     return result;
   },
 
   merge(latestContent, baseContent, modifiedContent) {
-    let folder = tempAssets(latestContent, baseContent, modifiedContent);
+    let folder = tempAssets([latestContent, baseContent, modifiedContent]);
     let result = exec(`diff3 -m ${folder}/1 ${folder}/2 ${folder}/3`, { silent: true });
     rmTempAssets(folder);
     return { text: result.stdout, error: result.stderr, exitStatus: result.code };
@@ -54,7 +54,7 @@ module.exports = {
 
   run(content, newContent, sep) {
     sep = sep || ' ';
-    let folder = tempAssets(content, newContent);
+    let folder = tempAssets([content, newContent]);
     let cmd = `diff --unchanged-line-format='%dn${sep}%L' --new-line-format='+${sep}%dn${sep}%L' ` +
       `--old-line-format='-${sep}%dn${sep}%L' ${folder}/1 ${folder}/2`;
 
@@ -64,7 +64,7 @@ module.exports = {
   }
 };
 
-let tempAssets = (...files) => {
+let tempAssets = (files) => {
   let folder = `${tempdir()}/${shortid.generate()}`;
   mkdir('-p', folder);
 
