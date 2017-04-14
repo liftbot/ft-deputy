@@ -90,7 +90,7 @@ let createPatch = (folder, reverse) => {
     case 1:
       return result.stdout;
     default:
-      // rmTempAssets(folder);
+      rmTempAssets(folder);
       throw new FTError(result.stderr || result.stdout);
   }
 };
