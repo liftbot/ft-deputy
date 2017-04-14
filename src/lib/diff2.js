@@ -12,7 +12,7 @@ const tempdir = require('shelljs/shell').tempdir;
 let Errors = {};
 require('./errors')(Errors);
 
-const { FTError } = Errors;
+const FTError = Errors.FTError;
 
 module.exports = {
   createPatch(filename, oldStr, newStr) {
