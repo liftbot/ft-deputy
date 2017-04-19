@@ -21,7 +21,8 @@ module.exports = (appName, logger, jobService) => {
             requestPath: req.path,
             requestMethod: req.method,
             errorMessage: err.message,
-            errorTrace: err.stack
+            errorTrace: err.stack,
+            requestBody: req.body
           }
         })
       };
