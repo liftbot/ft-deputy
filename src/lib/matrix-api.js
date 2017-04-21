@@ -103,7 +103,27 @@ let sendRequest = (options) => {
           if (httpResponse.statusCode === 400) {
             // had been catched by shenghua's api, we can return the error message to client.
             try {
-              message = JSON.parse(body).ErrorMessage
+              message = JSON.parse(body).ErrorMessage;
+              
+              // catch create tn message error;
+              if (!message) { message = JSON.parse(body).errors; };
+            /* 
+              {
+                "errors": [
+                  {
+                    "type": "InvalidValue",
+                    "message": "Talent Network Name invalid due to an undetermined reason",
+                    "code": 701,
+                    "path": "$.talent_network.name"
+                  }
+                ],
+                "timing": {
+                  "time_received": "2017-04-21T07:57:44.153Z",
+                  "time_elapsed_seconds": 0.0675036
+                }
+              }
+            */
+
             } catch (ex) {}
             err = new FTError(message);
           } else {
