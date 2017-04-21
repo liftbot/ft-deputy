@@ -106,7 +106,12 @@ let sendRequest = (options) => {
               message = JSON.parse(body).ErrorMessage;
               
               // catch create tn message error;
-              if (!message) { message = JSON.parse(body).errors; };
+              var createError = JSON.parse(body).errors[0];
+              if (!message && createError) {
+                message = createError.message;
+              } else if (!message){
+                message = "Unknown error, please contact Fulfillment Tool team !"
+              }
             /* 
               {
                 "errors": [
