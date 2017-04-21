@@ -106,11 +106,13 @@ let sendRequest = (options) => {
               message = JSON.parse(body).ErrorMessage;
               
               // catch create tn message error;
-              var createError = JSON.parse(body).errors[0];
-              if (!message && createError) {
-                message = createError.message;
-              } else if (!message){
+
+              if (!message && JSON.parse(body)) {
                 message = "Error occurs when call matrix api. Sorry for that, you can report it to fulfillment tools team.";
+                var createError = JSON.parse(body).errors[0];
+                if (createError) {
+                  message = createError.message;
+                }
               }
             /* 
               {
