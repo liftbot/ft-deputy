@@ -110,7 +110,7 @@ let sendRequest = (options) => {
               if (!message && createError) {
                 message = createError.message;
               } else if (!message){
-                message = "Unknown error, please contact Fulfillment Tool team !"
+                message = "Error occurs when call matrix api. Sorry for that, you can report it to fulfillment tools team.";
               }
             /* 
               {
