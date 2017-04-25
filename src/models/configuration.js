@@ -87,11 +87,14 @@ module.exports = (sequelize) => {
         let dbHash = config.hash;
         let dbContent = config.content;
         modifiedContent = prettify(modifiedContent, 'json');
-        let modifiedHahs = hash.sha1(modifiedContent);
+        let modifiedHash = hash.sha1(modifiedContent);
 
         if (baseHash == dbHash) {
           return RSVP.resolve(modifiedContent);
-        } else if (baseHash === modifiedHahs) {
+        /* if baseHash === modifiedHash 
+           user change the content back to baseContent, hence just return modifiedContent
+        */
+        } else if (baseHash === modifiedHash) {
           return RSVP.resolve(modifiedContent);
         } else {
           return config.revertTo(null, baseHash).then(baseContent => {
