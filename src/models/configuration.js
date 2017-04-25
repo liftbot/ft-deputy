@@ -87,8 +87,11 @@ module.exports = (sequelize) => {
         let dbHash = config.hash;
         let dbContent = config.content;
         modifiedContent = prettify(modifiedContent, 'json');
+        let modifiedHahs = hash.sha1(modifiedContent);
 
         if (baseHash == dbHash) {
+          return RSVP.resolve(modifiedContent);
+        } else if (baseHash === modifiedHahs) {
           return RSVP.resolve(modifiedContent);
         } else {
           return config.revertTo(null, baseHash).then(baseContent => {
