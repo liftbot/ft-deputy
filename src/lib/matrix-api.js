@@ -103,34 +103,7 @@ let sendRequest = (options) => {
           if (httpResponse.statusCode === 400) {
             // had been catched by shenghua's api, we can return the error message to client.
             try {
-              message = JSON.parse(body).ErrorMessage;
-              
-              // catch create tn message error;
-
-              if (!message) {
-                message = "Error occurs when call matrix api. Sorry for that, you can report it to fulfillment tools team.";
-                var createError = JSON.parse(body).errors;
-                if (createError) {
-                  message = createError[0].message;
-                }
-              }
-            /* 
-              {
-                "errors": [
-                  {
-                    "type": "InvalidValue",
-                    "message": "Talent Network Name invalid due to an undetermined reason",
-                    "code": 701,
-                    "path": "$.talent_network.name"
-                  }
-                ],
-                "timing": {
-                  "time_received": "2017-04-21T07:57:44.153Z",
-                  "time_elapsed_seconds": 0.0675036
-                }
-              }
-            */
-
+              message = JSON.parse(body).ErrorMessage
             } catch (ex) {}
             err = new FTError(message);
           } else {
@@ -212,8 +185,49 @@ let queryTns = (searchObj) => {
             body = JSON.stringify(body);
           } catch (ex) {}
 
-          err = new FTError(body);
-          err.code = httpResponse.statusCode;
+          // err = new FTError(body);
+          err = new Error(body);
+          // err.code = httpResponse.statusCode;
+          reject(err);
+        }
+      }
+    });
+  });
+};
+
+let queryTns2 = (token, queryString) => {
+  return new RSVP.Promise((resolve, reject) => {
+    let url = `${getUrl('com', ENV)}/consumer/talentnetwork/talentnetworks`;
+    let qs = Object.assign({}, queryString);
+    let options = {
+      method: 'GET',
+      uri: url,
+      qs: qs,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+    request(options, (err, httpResponse, body) => {
+      if (err) {
+        reject(err);
+      } else {
+        if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
+          resolve(JSON.parse(body));
+        } else {
+          /**
+           *   Here we use Error to replace the FTError, It becaulse we want to
+           * send email to us if there is any error occurres, and at fronted,
+           * we had use the friendly message showing to users.
+           */
+          try {
+            body = JSON.parse(body);
+            let errors = (body.Errors || body.errors);
+            // err = new FTError(errors[0].message);
+            err = new Error(errors[0].message);
+          } catch (ex) {
+            // err = new FTError(body);
+            err = new Error(body);
+          }
           reject(err);
         }
       }
@@ -240,5 +254,11 @@ module.exports = {
     });
   },
 
-  queryTns: queryTns
+  queryTns: queryTns,
+
+  queryTns2(qs) {
+    return getToken().then(token => {
+      return queryTns2(token, qs);
+    })
+  }
 };
