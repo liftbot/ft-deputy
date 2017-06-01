@@ -10,6 +10,18 @@ development:
       min: 0
       idle: 10000
 
+test:
+  database: ft_test
+  user: root
+  pass: root
+  options:
+    host: 127.0.0.1
+    port: 3306
+    pool:
+      max: 5
+      min: 0
+      idle: 10000
+
 staging:
   database: <%= process.env.MYSQL_DATABASE %>
   user: <%= process.env.MYSQL_USER %>

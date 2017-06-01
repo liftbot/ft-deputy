@@ -1,47 +1,47 @@
 'use strict';
 
-let Sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 
-module.exports = (sequelize) => {
-  return sequelize.define('action_history', {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
+const sequelize = require('../config/database');
 
-    user: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
+module.exports = sequelize.define('action_history', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
 
-    event_title: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
+  user: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
 
-    event_description: {
-      type: Sequelize.TEXT('long'),
-      allowNull: false
-    }
+  event_title: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+
+  event_description: {
+    type: Sequelize.TEXT('long'),
+    allowNull: false
+  }
   }, {
-    timestamps: true,
-    underscored: true,
+  timestamps: true,
+  underscored: true,
 
-    classMethods: {
-      login(username) {
-        return this.create({
-          user: username,
-          event_title: 'User Login',
-          event_description: 'User login'
-        });
-      }
-    },
+  classMethods: {
+    login(username) {
+      return this.create({
+        user: username,
+        event_title: 'User Login',
+        event_description: 'User login'
+      });
+    }
+  },
 
-    indexes: [
-      {
-        fields: ['user', 'event_title']
-      }
-    ]
-  });
-};
+  indexes: [
+    {
+      fields: ['user', 'event_title']
+    }
+  ]
+});

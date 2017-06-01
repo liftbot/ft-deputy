@@ -1,37 +1,22 @@
 'use strict';
 
 let sequelize = require('./config/database');
-let settingControlFlag = require('./models/setting-control-flag');
-let system = require('./models/system');
-let user = require('./models/user');
-let preference = require('./models/preference');
-let actionHistory = require('./models/action-history');
-let tankConfig = require('./models/tank-config');
-let configuration = require('./models/configuration');
-let revision = require('./models/revision');
-let draft = require('./models/draft');
-let permission = require('./models/permission');
-let role = require('./models/role');
-let rolePermission = require('./models/role-permission');
-let userRole = require('./models/user-role');
-let eventLog = require('./models/event-log');
+let SettingControlFlag = require('./models/setting-control-flag');
+let System = require('./models/system');
+let User = require('./models/user');
+let Preference = require('./models/preference');
+let ActionHistory = require('./models/action-history');
+let TankConfig = require('./models/tank-config');
+let Configuration = require('./models/configuration');
+let Revision = require('./models/revision');
+let Draft = require('./models/draft');
+let Permission = require('./models/permission');
+let Role = require('./models/role');
+let RolePermission = require('./models/role-permission');
+let UserRole = require('./models/user-role');
+let EventLog = require('./models/event-log');
 
 module.exports = (target) => {
-  let SettingControlFlag = settingControlFlag(sequelize);
-  let EventLog = eventLog(sequelize);
-  let System = system(sequelize);
-  let User = user(sequelize);
-  let Preference = preference(sequelize);
-  let ActionHistory = actionHistory(sequelize);
-  let TankConfig = tankConfig(sequelize);
-  let Configuration = configuration(sequelize);
-  let Revision = revision(sequelize, Configuration);
-  let Draft = draft(sequelize);
-  let Permission = permission(sequelize);
-  let Role = role(sequelize);
-  let RolePermission = rolePermission(sequelize, Role, Permission)
-  let UserRole = userRole(sequelize, User, Role);
-
   target.sequelize = sequelize;
   target.EventLog = EventLog;
   target.SettingControlFlag = SettingControlFlag;

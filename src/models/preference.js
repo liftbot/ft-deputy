@@ -1,43 +1,43 @@
 'use strict';
 
-let Sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 
-module.exports = (sequelize) => {
-  return sequelize.define('preference', {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
+const sequelize = require('../config/database');
+
+module.exports = sequelize.define('preference', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+
+  content: {
+    type: Sequelize.TEXT('long'),
+    allowNull: false
+  }
+}, {
+  timestamps: true,
+  underscored: true,
+
+  indexes: [
+    {
+      unique: true,
+      fields: ['name']
+    }
+  ],
+
+  scopes: {
+    schema: {
+      where: {name: 'schema'}
     },
 
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-
-    content: {
-      type: Sequelize.TEXT('long'),
-      allowNull: false
+    mapping: {
+      where: {name: 'mapping'}
     }
-  }, {
-    timestamps: true,
-    underscored: true,
-
-    indexes: [
-      {
-        unique: true,
-        fields: ['name']
-      }
-    ],
-
-    scopes: {
-      schema: {
-        where: {name: 'schema'}
-      },
-
-      mapping: {
-        where: {name: 'mapping'}
-      }
-    }
-  });
-};
+  }
+});
