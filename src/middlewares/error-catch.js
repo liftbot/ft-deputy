@@ -2,7 +2,9 @@
 
 const request = require('request');
 
-module.exports = (appName, logger, jobService) => {
+let jobService = process.env.JOB_SERVICE || 'http://localhost:7000';
+
+module.exports = (emailSubject) => {
   return (err, req, res, next) => {
     logger.error(err.message, "\n" + err.stack);
 
@@ -17,7 +19,7 @@ module.exports = (appName, logger, jobService) => {
         body: JSON.stringify({
           type: "Exception",
           params: {
-            subject: appName,
+            subject: emailSubject,
             requestPath: req.path,
             requestMethod: req.method,
             errorMessage: err.message,

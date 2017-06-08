@@ -2,38 +2,35 @@
 
 let Sequelize = require('sequelize');
 
-/*
-  dependency: User, Role, Permission
-*/
-module.exports = (sequelize, User, Role) => {
-  let UserRole = sequelize.define('user_role', {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
+const sequelize = require('../config/database');
+const User = require('./user');
+const Role = require('./role');
 
-    user_id: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
+let UserRole = sequelize.define('user_role', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
 
-    role_id: {
-      type: Sequelize.STRING,
-      allowNull: false
-    }
-  }, {
-    timestamps: true,
-    underscored: true
-  });
+  user_id: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
 
-  User.belongsToMany(Role, {through: UserRole});
-  Role.belongsToMany(User, {through: UserRole});
+  role_id: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+}, {
+  timestamps: true,
+  underscored: true
+});
 
-  UserRole.belongsTo(User, {foreignKey: 'user_id'});
-  User.hasMany(UserRole, {foreignKey: 'user_id'});
+UserRole.belongsTo(User, {foreignKey: 'user_id'});
+User.hasMany(UserRole);
 
-  UserRole.belongsTo(Role, {foreignKey: 'role_id'});
+UserRole.belongsTo(Role, {foreignKey: 'role_id'});
+Role.hasMany(UserRole);
 
-  return UserRole;
-};
+module.exports = UserRole;

@@ -3,83 +3,83 @@
 const RSVP = require('rsvp');
 const Sequelize = require('sequelize');
 
-module.exports = (sequelize) => {
-  return sequelize.define('setting_control_flag', {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
+const sequelize = require('../config/database');
 
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true
-      }
-    },
+module.exports = sequelize.define('setting_control_flag', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
 
-    value: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-
-    description: {
-      type: Sequelize.STRING
-    },
-
-    owner: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-
-    updated_by: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-
-    /*
-      Boolean, String
-    */
-    type: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true
-      }
-    },
-
-    /*
-      active, deleted
-    */
-    status: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true
-      }
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
     }
-  }, {
-    timestamps: true,
-    underscored: true,
+  },
 
-    indexes: [
-      {
-        unique: true,
-        fields: ['name']
-      }
-    ],
+  value: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
 
-    classMethods: {
-      getStringValue: function(name) {
-        let f = (SETTING_CONTROL_FLAGS || []).filter(flag => name === flag.name)[0];
-        return !f ? '' : f.value;
-      },
+  description: {
+    type: Sequelize.STRING
+  },
 
-      getBooleanValue: function(name) {
-        let f = (SETTING_CONTROL_FLAGS || []).filter(flag => name === flag.name)[0];
-        return !!f && f.value == 'true';
-      }
+  owner: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+
+  updated_by: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+
+  /*
+    Boolean, String
+  */
+  type: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
     }
-  });
-};
+  },
+
+  /*
+    active, deleted
+  */
+  status: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  }
+}, {
+  timestamps: true,
+  underscored: true,
+
+  indexes: [
+    {
+      unique: true,
+      fields: ['name']
+    }
+  ],
+
+  classMethods: {
+    getStringValue: function(name) {
+      let f = (SETTING_CONTROL_FLAGS || []).filter(flag => name === flag.name)[0];
+      return !f ? '' : f.value;
+    },
+
+    getBooleanValue: function(name) {
+      let f = (SETTING_CONTROL_FLAGS || []).filter(flag => name === flag.name)[0];
+      return !!f && f.value == 'true';
+    }
+  }
+});

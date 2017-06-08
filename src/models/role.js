@@ -1,32 +1,32 @@
 'use strict';
 
-let Sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 
-module.exports = (sequelize) => {
-  return sequelize.define('role', {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
+const sequelize = require('../config/database');
 
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
+module.exports = sequelize.define('role', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
 
-    description: {
-      type: Sequelize.STRING
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+
+  description: {
+    type: Sequelize.STRING
+  }
+}, {
+  timestamps: true,
+  underscored: true,
+
+  indexes: [
+    {
+      unique: true,
+      fields: ['name']
     }
-  }, {
-    timestamps: true,
-    underscored: true,
-
-    indexes: [
-      {
-        unique: true,
-        fields: ['name']
-      }
-    ]
-  });
-};
+  ]
+});

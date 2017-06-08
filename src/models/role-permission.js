@@ -1,37 +1,36 @@
 'use strict';
 
-let Sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 
-/*
-  dependency: Role, Permission
-*/
-module.exports = (sequelize, Role, Permission) => {
-  let RolePermission = sequelize.define('role_permission', {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
+const sequelize = require('../config/database');
+const Role = require('./role');
+const Permission = require('./permission');
 
-    role_id: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
+let RolePermission = sequelize.define('role_permission', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
 
-    permission_id: {
-      type: Sequelize.STRING,
-      allowNull: false
-    }
-  }, {
-    timestamps: true,
-    underscored: true
-  });
+  role_id: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
 
-  Role.belongsToMany(Permission, {through: RolePermission});
-  Permission.belongsToMany(Role, {through: RolePermission});
+  permission_id: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+}, {
+  timestamps: true,
+  underscored: true
+});
 
-  RolePermission.belongsTo(Role, {foreignKey: 'role_id'});
-  RolePermission.belongsTo(Permission, {foreignKey: 'permission_id'});
+RolePermission.belongsTo(Role, {foreignKey: 'role_id'});
+Role.hasMany(RolePermission);
 
-  return RolePermission;
-};
+RolePermission.belongsTo(Permission, {foreignKey: 'permission_id'});
+Permission.hasMany(RolePermission);
+
+module.exports = RolePermission;
