@@ -132,7 +132,7 @@ let sendRequest = (options) => {
             } catch (ex) {}
             err = new FTError(message);
           } else {
-            message = `Error occurs when call matrix api, ${message}. Sorry for that, you can report it to fulfillment tools team.`;
+            message = `Error occurs when call matrix api: '${message}'. Sorry for that, you can report it to fulfillment tools team.`;
             err = new Error(message);
           }
 
