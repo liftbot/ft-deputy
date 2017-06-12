@@ -2,7 +2,6 @@
 
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const path = require('path');
 
 const errors = require('./lib/errors');
@@ -27,9 +26,7 @@ module.exports.defineApp = (port, logDir, target) => {
 
   // MiddleWare
   app.use(accessLog);
-  app.use(bodyParser.json({limit: '5mb'}));
-  app.use(bodyParser.urlencoded({ extended: true }));
-
+  
   // port, env
   app.set('port', port);
   app.set('env', env);
