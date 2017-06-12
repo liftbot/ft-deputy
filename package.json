@@ -9,7 +9,6 @@
   "author": "wluo",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "1.17.1",
     "crypto": "0.0.3",
     "diff": "3.2.0",
     "ejs": "2.3.4",
