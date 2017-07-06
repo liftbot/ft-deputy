@@ -104,7 +104,7 @@ let sendRequest = (options) => {
             // had been catched by shenghua's api, we can return the error message to client.
             try {
               message = JSON.parse(body).ErrorMessage;
-              
+
               // catch create tn message error;
               if (!message) {
                 message = "Error occurs when call matrix api. Sorry for that, you can report it to fulfillment tools team.";
@@ -113,7 +113,7 @@ let sendRequest = (options) => {
                   message = createError[0].message;
                 }
               }
-              /* 
+              /*
                 {
                   "errors": [
                     {
@@ -144,8 +144,7 @@ let sendRequest = (options) => {
   });
 };
 
-let queryTankConfig = (token, tnDid) => {
-  let url = `${getUrl('com', ENV)}/consumer/talentnetwork/tankconfig/${tnDid}`;
+let queryTankConfig = (token, tnDid, url) => {
   let options = {
     method: 'GET',
     uri: url,
@@ -158,8 +157,7 @@ let queryTankConfig = (token, tnDid) => {
   return sendRequest(options);
 };
 
-let updateTankConfig = (token, tnDid, data) => {
-  let url = `${getUrl('com', ENV)}/consumer/talentnetwork/tankconfig/${tnDid}`;
+let updateTankConfig = (token, tnDid, data, url) => {
   let options = {
     method: 'PUT',
     uri: url,
@@ -263,13 +261,29 @@ let queryTns2 = (token, queryString) => {
 module.exports = {
   query(tnDid) {
     return getToken().then(token => {
-      return queryTankConfig(token, tnDid);
+      let url = `${getUrl('com', ENV)}/consumer/talentnetwork/tankConfig/${tnDid}`;
+      return queryTankConfig(token, tnDid, url);
     });
   },
 
   update(tnDid, data) {
     return getToken().then(token => {
-      return updateTankConfig(token, tnDid, data);
+      let url = `${getUrl('com', ENV)}/consumer/talentnetwork/tankConfig/${tnDid}`;
+      return updateTankConfig(token, tnDid, data, url);
+    });
+  },
+
+  queryNew(tnDid) {
+    return getToken().then(token => {
+      let newUrl = `${getUrl('com', ENV)}/consumer/talentnetwork/talentnetworks/${tnDid}`;
+      return queryTankConfig(token, tnDid, newUrl);
+    });
+  },
+
+  updateNew(tnDid, data) {
+    return getToken().then(token => {
+      let newUrl = `${getUrl('com', ENV)}/consumer/talentnetwork/talentnetworks/${tnDid}`;
+      return updateTankConfig(token, tnDid, data, newUrl);
     });
   },
 
