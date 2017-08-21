@@ -314,7 +314,7 @@ module.exports = {
       return queryTns2(token, qs);
     })
   },
-  upload(data) {
+  uploadImage(data) {
     return getToken().then(token => {
       return uploadImg(token, data);
     });
