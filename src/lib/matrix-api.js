@@ -258,6 +258,20 @@ let queryTns2 = (token, queryString) => {
   });
 };
 
+let uploadImg = (token, data) => {
+  let url = 'https://api.careerbuilder.com/consumer/talentnetwork/cms/upload';
+  let options = {
+    method: 'POST',
+    uri: url,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  };
+  return sendRequest(options);
+};
+
 module.exports = {
   query(tnDid) {
     return getToken().then(token => {
@@ -299,5 +313,10 @@ module.exports = {
     return getToken().then(token => {
       return queryTns2(token, qs);
     })
+  },
+  upload(data) {
+    return getToken().then(token => {
+      return uploadImg(token, data);
+    });
   }
 };
