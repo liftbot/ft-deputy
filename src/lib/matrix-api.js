@@ -259,7 +259,7 @@ let queryTns2 = (token, queryString) => {
 };
 
 let uploadImg = (token, data) => {
-  let url = 'https://api.careerbuilder.com/consumer/talentnetwork/cms/upload';
+  let url = `${getUrl('com', ENV)}/consumer/talentnetwork/cms/upload`;
   let options = {
     method: 'POST',
     uri: url,
