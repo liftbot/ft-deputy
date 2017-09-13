@@ -272,6 +272,20 @@ let uploadImg = (token, data) => {
   return sendRequest(options);
 };
 
+let getInitialValues = (token, accountDid) => {
+  let url = `${getUrl('com', ENV)}/consumer/talentnetwork/talentnetworks/initialvalues/${accountDid}`;
+  let options = {
+    method: 'GET',
+    uri: url,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  };
+
+  return sendRequest(options);
+}
+
 module.exports = {
   query(tnDid) {
     return getToken().then(token => {
@@ -314,9 +328,17 @@ module.exports = {
       return queryTns2(token, qs);
     })
   },
+  
   uploadImage(data) {
     return getToken().then(token => {
       return uploadImg(token, data);
     });
+  },
+
+  getInitialValues(accountDid) {
+    return getToken().then(token => {
+      return getInitialValues(token, accountDid);
+    });
   }
+  
 };
