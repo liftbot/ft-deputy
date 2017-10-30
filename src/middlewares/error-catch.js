@@ -2,16 +2,16 @@
 
 const request = require('request');
 
-let jobService = process.env.JOB_SERVICE || 'http://localhost:7000';
+let FT_API_BASE_URL = process.env.FT_API_HOST ? 'https://' + process.env.FT_API_HOST : 'http://localhost:7000';
 
 module.exports = (emailSubject) => {
   return (err, req, res, next) => {
     logger.error(err.message, "\n" + err.stack);
 
-    if (!(err instanceof FTError) && jobService) {  // Uncatched error should be notified
+    if (!(err instanceof FTError) && FT_API_BASE_URL) {  // Uncatched error should be notified
       let options = {
         method: 'POST',
-        uri: jobService + '/jobs/mail',
+        uri: FT_API_BASE_URL + '/api/jobs/mail',
         headers: {
           'X-FT-USER': req.get('X-FT-USER'),
           'Content-Type': 'application/json'
