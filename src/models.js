@@ -16,6 +16,7 @@ let RolePermission = require('./models/role-permission');
 let UserRole = require('./models/user-role');
 let EventLog = require('./models/event-log');
 let ReleaseVersion = require('./models/release-version');
+let SystemReflowRequest = require('./models/system-reflow-request');
 
 module.exports = (target) => {
   target.sequelize = sequelize;
@@ -34,6 +35,7 @@ module.exports = (target) => {
   target.RolePermission = RolePermission;
   target.UserRole = UserRole;
   target.ReleaseVersion = ReleaseVersion;
+  target.SystemReflowRequest = SystemReflowRequest;
 
   target.sequelize.sync();
 };
