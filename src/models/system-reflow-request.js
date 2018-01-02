@@ -4,7 +4,7 @@ let Sequelize = require('sequelize');
 
 const sequelize = require('../config/database');
 
-module.exports = sequelize.define('target_system', {
+module.exports = sequelize.define('system_reflow_request', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -20,13 +20,13 @@ module.exports = sequelize.define('target_system', {
     allowNull: false
   }
 }, {
-  timestamps: true,
-  underscored: true,
+    timestamps: true,
+    underscored: true,
 
-  indexes: [
-    {
-      unique: true,
-      fields: ['system_id']
-    }
-  ]
-});
+    indexes: [
+      {
+        unique: true,
+        fields: ['system_id']
+      }
+    ]
+  });
