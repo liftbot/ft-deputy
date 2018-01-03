@@ -289,14 +289,14 @@ let getInitialValues = (token, accountDid) => {
 module.exports = {
   query(tnDid) {
     return getToken().then(token => {
-      let url = `${getUrl('com', ENV)}/consumer/talentnetwork/tankConfig/${tnDid}`;
+      let url = `${getUrl('com', ENV)}/consumer/talentnetwork/talentnetworks/${tnDid}`;
       return queryTankConfig(token, tnDid, url);
     });
   },
 
   update(tnDid, data) {
     return getToken().then(token => {
-      let url = `${getUrl('com', ENV)}/consumer/talentnetwork/tankConfig/${tnDid}`;
+      let url = `${getUrl('com', ENV)}/consumer/talentnetwork/talentnetworks/${tnDid}`;
       return updateTankConfig(token, tnDid, data, url);
     });
   },
