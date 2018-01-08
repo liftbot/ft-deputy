@@ -144,7 +144,7 @@ let sendRequest = (options) => {
   });
 };
 
-let queryTankConfig = (token, tnDid, url) => {
+let queryTankConfig = (token, tnDid, url, version) => {
   let options = {
     method: 'GET',
     uri: url,
@@ -154,10 +154,14 @@ let queryTankConfig = (token, tnDid, url) => {
     }
   };
 
+  if (SettingControlFlag.getBooleanValue("enableAddVersionToHeaders")) {
+    addVersionToHeaders(options.headers);
+  }
+
   return sendRequest(options);
 };
 
-let updateTankConfig = (token, tnDid, data, url) => {
+let updateTankConfig = (token, tnDid, data, url, version) => {
   let options = {
     method: 'PUT',
     uri: url,
@@ -168,10 +172,14 @@ let updateTankConfig = (token, tnDid, data, url) => {
     body: data
   };
 
+  if (SettingControlFlag.getBooleanValue("enableAddVersionToHeaders")) {
+    addVersionToHeaders(options.headers);
+  }
+
   return sendRequest(options);
 };
 
-let createTankConfig = (token, data) => {
+let createTankConfig = (token, data, version) => {
   let url = `${getUrl('com', ENV)}/consumer/talentnetwork`;
   let options = {
     method: 'POST',
@@ -183,8 +191,29 @@ let createTankConfig = (token, data) => {
     body: JSON.stringify(data)
   };
 
+  if (SettingControlFlag.getBooleanValue("enableAddVersionToHeaders")) {
+    addVersionToHeaders(options.headers);
+  }
+
   return sendRequest(options);
+
 };
+
+let addVersionToHeaders = (headers) => {
+  if (SettingControlFlag.getBooleanValue("enableChangeReleaseVersionToSystem")) {
+
+    if (version) {
+      headers.Accept = `Version=${version}`;
+    }
+
+  } else {
+
+    if (version === 1) {
+      headers.Accept = `Version=1.1.0`;
+    }
+
+  }
+}
 
 // AccountDID, TNDID, TN Name, or Site URL
 let queryTns = (searchObj) => {
@@ -287,17 +316,17 @@ let getInitialValues = (token, accountDid) => {
 }
 
 module.exports = {
-  query(tnDid) {
+  query(tnDid, version) {
     return getToken().then(token => {
       let url = `${getUrl('com', ENV)}/consumer/talentnetwork/talentnetworks/${tnDid}`;
-      return queryTankConfig(token, tnDid, url);
+      return queryTankConfig(token, tnDid, url, version);
     });
   },
 
-  update(tnDid, data) {
+  update(tnDid, data, version) {
     return getToken().then(token => {
       let url = `${getUrl('com', ENV)}/consumer/talentnetwork/talentnetworks/${tnDid}`;
-      return updateTankConfig(token, tnDid, data, url);
+      return updateTankConfig(token, tnDid, data, url, version);
     });
   },
 
