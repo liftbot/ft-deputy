@@ -155,7 +155,7 @@ let queryTankConfig = (token, tnDid, url, version) => {
   };
 
   if (SettingControlFlag.getBooleanValue("enableAddVersionToHeaders")) {
-    addVersionToHeaders(options.headers);
+    addVersionToHeaders(options.headers, version);
   }
 
   return sendRequest(options);
@@ -173,7 +173,7 @@ let updateTankConfig = (token, tnDid, data, url, version) => {
   };
 
   if (SettingControlFlag.getBooleanValue("enableAddVersionToHeaders")) {
-    addVersionToHeaders(options.headers);
+    addVersionToHeaders(options.headers, version);
   }
 
   return sendRequest(options);
@@ -192,14 +192,14 @@ let createTankConfig = (token, data, version) => {
   };
 
   if (SettingControlFlag.getBooleanValue("enableAddVersionToHeaders")) {
-    addVersionToHeaders(options.headers);
+    addVersionToHeaders(options.headers, version);
   }
 
   return sendRequest(options);
 
 };
 
-let addVersionToHeaders = (headers) => {
+let addVersionToHeaders = (headers, version) => {
   if (SettingControlFlag.getBooleanValue("enableChangeReleaseVersionToSystem")) {
 
     if (version) {
@@ -208,7 +208,7 @@ let addVersionToHeaders = (headers) => {
 
   } else {
 
-    if (version === 1) {
+    if (version === 0) {
       headers.Accept = `Version=1.1.0`;
     }
 
