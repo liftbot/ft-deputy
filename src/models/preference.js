@@ -16,6 +16,11 @@ module.exports = sequelize.define('preference', {
     allowNull: false
   },
 
+  version: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+
   content: {
     type: Sequelize.TEXT('long'),
     allowNull: false
@@ -27,7 +32,7 @@ module.exports = sequelize.define('preference', {
   indexes: [
     {
       unique: true,
-      fields: ['name']
+      fields: ['name', 'version']
     }
   ],
 
