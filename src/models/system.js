@@ -6,21 +6,12 @@ const sequelize = require('../config/database');
 
 module.exports = sequelize.define('system', {
   id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-
-  // TNDID or hostname
-  external_id: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    primaryKey: true
   },
 
-  // status
-  //  - New
-  //  - Synced
-  status: {
+  version: {
     type: Sequelize.STRING,
     allowNull: false
   }
@@ -28,10 +19,4 @@ module.exports = sequelize.define('system', {
   timestamps: true,
   underscored: true,
 
-  indexes: [
-    {
-      unique: true,
-      fields: ['external_id']
-    }
-  ]
 });
