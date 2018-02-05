@@ -132,10 +132,9 @@ let sendRequest = (options) => {
             } catch (ex) {}
             err = new FTError(message);
           } else if (httpResponse.statusCode === 500) {
-            message = `Error occurs when call matrix api: '${message}'. Sorry for that, you can report it to fulfillment-tools team(fulfillmenttools@careerbuilder.com) and AP team(AcquisitionAndPlatformDevelopment@careerbuilder.com).`;
+            message = `Unexpected error occurs when calling matrix api: '${message}'. Sorry for that, please report it to fulfillment-tools team(fulfillmenttools@careerbuilder.com) and AP team(AcquisitionAndPlatformDevelopment@careerbuilder.com).`;
             err = new Error(message);
-          }
-            else {
+          } else {
             message = `Error occurs when call matrix api: '${message}'. Sorry for that, you can report it to fulfillment tools team.`;
             err = new Error(message);
           }
