@@ -110,7 +110,13 @@ let sendRequest = (options) => {
                 message = "Error occurs when call matrix api. Sorry for that, you can report it to fulfillment tools team.";
                 var createError = JSON.parse(body).errors;
                 if (createError) {
-                  message = createError[0].message;
+
+                  if (SettingControlFlag.getBooleanValue("enableCustomiseErrorMessage")) {
+                    message = createError[0];
+                  } else {
+                    message = createError[0].message;
+                  }
+                  
                 }
               }
               /*
