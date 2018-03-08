@@ -163,9 +163,7 @@ let queryTankConfig = (token, tnDid, url, version) => {
     }
   };
 
-  if (SettingControlFlag.getBooleanValue("enableAddVersionToHeaders")) {
-    addVersionToHeaders(options.headers, version);
-  }
+  addVersionToHeaders(options.headers, version);
 
   return sendRequest(options);
 };
@@ -181,9 +179,7 @@ let updateTankConfig = (token, tnDid, data, url, version) => {
     body: data
   };
 
-  if (SettingControlFlag.getBooleanValue("enableAddVersionToHeaders")) {
-    addVersionToHeaders(options.headers, version);
-  }
+  addVersionToHeaders(options.headers, version);
 
   return sendRequest(options);
 };
@@ -200,9 +196,7 @@ let createTankConfig = (token, data, version) => {
     body: JSON.stringify(data)
   };
 
-  if (SettingControlFlag.getBooleanValue("enableAddVersionToHeaders")) {
-    addVersionToHeaders(options.headers, version);
-  }
+  addVersionToHeaders(options.headers, version);
 
   return sendRequest(options);
 
