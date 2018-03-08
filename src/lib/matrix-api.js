@@ -110,13 +110,7 @@ let sendRequest = (options) => {
                 message = "Error occurs when call matrix api. Sorry for that, you can report it to fulfillment tools team.";
                 var createError = JSON.parse(body).errors;
                 if (createError) {
-
-                  if (SettingControlFlag.getBooleanValue("enableCustomiseErrorMessage")) {
-                    message = createError[0];
-                  } else {
-                    message = createError[0].message;
-                  }
-                  
+                  message = createError[0];
                 }
               }
               /*
@@ -203,18 +197,8 @@ let createTankConfig = (token, data, version) => {
 };
 
 let addVersionToHeaders = (headers, version) => {
-  if (SettingControlFlag.getBooleanValue("enableChangeReleaseVersionToSystem")) {
-
-    if (version) {
-      headers.Accept = `Version=${version}`;
-    }
-
-  } else {
-
-    if (version === 0) {
-      headers.Accept = `Version=1.1.0`;
-    }
-
+  if (version) {
+    headers.Accept = `Version=${version}`;
   }
 }
 
