@@ -110,13 +110,7 @@ let sendRequest = (options) => {
                 message = "Error occurs when call matrix api. Sorry for that, you can report it to fulfillment tools team.";
                 var createError = JSON.parse(body).errors;
                 if (createError) {
-
-                  if (SettingControlFlag.getBooleanValue("enableCustomiseErrorMessage")) {
-                    message = createError[0];
-                  } else {
-                    message = createError[0].message;
-                  }
-                  
+                  message = createError[0];
                 }
               }
               /*
@@ -163,9 +157,7 @@ let queryTankConfig = (token, tnDid, url, version) => {
     }
   };
 
-  if (SettingControlFlag.getBooleanValue("enableAddVersionToHeaders")) {
-    addVersionToHeaders(options.headers, version);
-  }
+  addVersionToHeaders(options.headers, version);
 
   return sendRequest(options);
 };
@@ -181,9 +173,7 @@ let updateTankConfig = (token, tnDid, data, url, version) => {
     body: data
   };
 
-  if (SettingControlFlag.getBooleanValue("enableAddVersionToHeaders")) {
-    addVersionToHeaders(options.headers, version);
-  }
+  addVersionToHeaders(options.headers, version);
 
   return sendRequest(options);
 };
@@ -200,27 +190,15 @@ let createTankConfig = (token, data, version) => {
     body: JSON.stringify(data)
   };
 
-  if (SettingControlFlag.getBooleanValue("enableAddVersionToHeaders")) {
-    addVersionToHeaders(options.headers, version);
-  }
+  addVersionToHeaders(options.headers, version);
 
   return sendRequest(options);
 
 };
 
 let addVersionToHeaders = (headers, version) => {
-  if (SettingControlFlag.getBooleanValue("enableChangeReleaseVersionToSystem")) {
-
-    if (version) {
-      headers.Accept = `Version=${version}`;
-    }
-
-  } else {
-
-    if (version === 0) {
-      headers.Accept = `Version=1.1.0`;
-    }
-
+  if (version) {
+    headers.Accept = `Version=${version}`;
   }
 }
 
