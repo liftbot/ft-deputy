@@ -1,85 +1,79 @@
 'use strict';
 
-const RSVP = require('rsvp');
-const Sequelize = require('sequelize');
+const ftApi = require('../lib/ft-api');
 
-const sequelize = require('../config/database');
+function SettingControlFlag() {}
 
-module.exports = sequelize.define('setting_control_flag', {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
+SettingControlFlag.initialize = function () {
+  this.timer = setInterval(function () {
+    SettingControlFlag.refresh();
+  }, 120000);
+  return this.refresh();
+};
 
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
-  },
-
-  value: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-
-  description: {
-    type: Sequelize.STRING
-  },
-
-  owner: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-
-  updated_by: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-
-  /*
-    Boolean, String
-  */
-  type: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
-  },
-
-  /*
-    active, deleted
-  */
-  status: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+SettingControlFlag.destroy = function () {
+  if (this.timer) {
+    clearInterval(this.timer);
   }
-}, {
-  timestamps: true,
-  underscored: true,
+  this.cache = null;
+};
 
-  indexes: [
-    {
-      unique: true,
-      fields: ['name']
-    }
-  ],
+SettingControlFlag.refresh = function () {
+  return ftApi.getFlags()
+    .then(flags => {
+      this.cache = flags;
+      return flags;
+    });
+};
 
-  classMethods: {
-    getStringValue: function(name) {
-      let f = (SETTING_CONTROL_FLAGS || []).filter(flag => name === flag.name)[0];
-      return !f ? '' : f.value;
-    },
-
-    getBooleanValue: function(name) {
-      let f = (SETTING_CONTROL_FLAGS || []).filter(flag => name === flag.name)[0];
-      return !!f && f.value == 'true';
-    }
+SettingControlFlag.findAll = function (options) {
+  if (!options || Object.keys(options).length !== 1 || options.status !== 'active') {
+    throw new Error('support for loading flags is now limited to { status: "active" }');
   }
-});
+
+  if (!this.cache) {
+    throw new Error('SettingControlFlag now requires calling `initialize` first');
+  }
+
+  return this.cache;
+};
+
+SettingControlFlag.getStringValue = function (flagName) {
+  if (!this.cache) {
+    throw new Error('SettingControlFlag now requires calling `initialize` first');
+  }
+
+  const flag = this.cache.find(f => f.name === flagName);
+
+  if (!flag) {
+    return '';
+  }
+
+  if (typeof flag.value !== 'string') {
+    // not a good idea to force converting to string but previous db based flag system save all flag values as strings
+    return String(flag.value);
+  }
+
+  return flag.value;
+};
+
+SettingControlFlag.getBooleanValue = function (flagName) {
+  if (!this.cache) {
+    throw new Error('SettingControlFlag now requires calling `initialize` first');
+  }
+
+  const flag = this.cache.find(f => f.name === flagName);
+
+  if (!flag) {
+    return false;
+  }
+
+  if (typeof flag.value !== 'boolean') {
+    // we should have correctly converted all boolean flags so it should be safe to throw error here
+    throw new Error('"' + flagName + '" is not a boolean flag');
+  }
+
+  return flag.value;
+};
+
+module.exports = SettingControlFlag;
