@@ -8,6 +8,7 @@ exports.hash = require('./src/lib/hash');
 exports.errors = require('./src/lib/errors');
 exports.logger = require('./src/lib/logger');
 exports.matrixApi = require('./src/lib/matrix-api');
+exports.ftApi = require('./src/lib/ft-api');
 
 // error class
 let errors = {};
