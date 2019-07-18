@@ -45,6 +45,7 @@ exports.RolePermission = require('./src/models/role-permission');
 exports.UserRole = require('./src/models/user-role');
 exports.EventLog = require('./src/models/event-log');
 exports.ReleaseVersion = require('./src/models/release-version');
+exports.SystemReflowRequest = require('./src/models/system-reflow-request')
 
 // app
 let app = require('./src/app');
