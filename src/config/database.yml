@@ -3,7 +3,7 @@ development:
   user: root
   pass: root
   options:
-    host: 10.63.88.138
+    host: 127.0.0.1
     port: 3306
     pool:
       max: 5
