@@ -22,7 +22,7 @@
     "request": "2.72.0",
     "request-promise": "2.0.1",
     "rsvp": "3.2.1",
-    "sequelize": "3.20.0",
+    "sequelize": "6.3.5",
     "shelljs": "0.7.0",
     "shortid": "^2.2.8",
     "winston": "2.2.0",
